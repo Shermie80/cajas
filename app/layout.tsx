@@ -1,0 +1,48 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Sidebar from "@/components/sidebar";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { createClient } from "@/lib/supabase/server";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModalProvider } from "@/components/modal-provider";
+import AuthModal from "@/components/auth-modal";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Cajas.app - Premium Case Opening",
+  description: "Open cases, win skins, provably fair.",
+};
+
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <ModalProvider>
+            <div className="flex min-h-screen bg-background text-foreground">
+              <Sidebar />
+              <div className="flex-1 md:ml-64 flex flex-col transition-all duration-300">
+                <Header user={user} />
+                <main className="flex-grow pt-20 px-4 md:px-8 pb-8">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+            </div>
+            <AuthModal />
+          </ModalProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

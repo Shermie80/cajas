@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+:root {
+  /* Dark Mode (Default) */
+  --background: 189 5% 21%;
+  /* #323738 */
+  --foreground: 0 0% 98%;
+  --card: 189 5% 25%;
+  --card-foreground: 0 0% 98%;
+  --popover: 189 5% 21%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 150 70% 50%;
+  /* Bright Green */
+  --primary-foreground: 0 0% 0%;
+  --secondary: 189 5% 30%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 189 5% 30%;
+  --muted-foreground: 189 5% 70%;
+  --accent: 189 5% 30%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 189 5% 30%;
+  --input: 189 5% 30%;
+  --ring: 150 70% 50%;
+  --radius: 0.5rem;
+}
+
+.light {
+  --background: 0 0% 95%;
+  --foreground: 189 5% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 189 5% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 189 5% 10%;
+  --primary: 150 70% 40%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 189 5% 10%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 189 5% 40%;
+  --accent: 0 0% 90%;
+  --accent-foreground: 189 5% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 85%;
+  --input: 0 0% 85%;
+  --ring: 150 70% 40%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  min-height: 100vh;
+}
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.neon-border {
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+}
