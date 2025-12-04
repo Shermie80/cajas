@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Cajas.app - Premium Case Opening",
   description: "Open cases, win skins, provably fair.",
+  icons: {
+    icon: '/fav.png',
+  },
 };
 
 export default async function RootLayout({
@@ -24,16 +27,30 @@ export default async function RootLayout({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  // If user is logged in, fetch their profile to get the custom avatar
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('avatar_url')
+      .eq('id', user.id)
+      .single();
+
+    if (profile?.avatar_url) {
+      // Override the avatar_url in user_metadata with the one from the profile
+      user.user_metadata.avatar_url = profile.avatar_url;
+    }
+  }
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <ModalProvider>
             <div className="flex min-h-screen bg-background text-foreground">
-              <Sidebar />
+              <Sidebar user={user} />
               <div className="flex-1 md:ml-64 flex flex-col transition-all duration-300">
                 <Header user={user} />
-                <main className="flex-grow pt-20 px-4 md:px-8 pb-8">
+                <main className="flex-grow pt-24 px-8 pb-8">
                   {children}
                 </main>
                 <Footer />

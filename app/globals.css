@@ -24,7 +24,7 @@
 
 :root {
   /* Dark Mode (Default) */
-  --background: 189 5% 21%;
+  --background: 189 5% 16%;
   /* #323738 */
   --foreground: 0 0% 98%;
   --card: 189 5% 25%;
@@ -36,7 +36,7 @@
   --primary-foreground: 0 0% 0%;
   --secondary: 189 5% 30%;
   --secondary-foreground: 0 0% 98%;
-  --muted: 189 5% 30%;
+  --muted: 189 5% 18%;
   --muted-foreground: 189 5% 70%;
   --accent: 189 5% 30%;
   --accent-foreground: 0 0% 98%;

@@ -10,13 +10,17 @@ import {
     Moon,
     Sun,
     Handshake,
-    X
+    X,
+    Box,
+    Home,
+    Trophy
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTheme } from '@/components/theme-provider'
 import { motion, AnimatePresence } from 'framer-motion'
+import { User } from '@supabase/supabase-js'
 
-export default function Sidebar() {
+export default function Sidebar({ user }: { user: User | null }) {
     const pathname = usePathname()
     const { theme, setTheme } = useTheme()
     const [isOpen, setIsOpen] = useState(false)
@@ -54,10 +58,7 @@ export default function Sidebar() {
                 {/* Logo Area */}
                 <div className="h-16 flex items-center justify-between px-6 border-b border-border">
                     <div className="flex items-center">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
-                            <Gift className="w-5 h-5 text-primary-foreground" />
-                        </div>
-                        <span className="font-bold text-xl tracking-tight">CAJAS</span>
+                        <img src="/logo.png" alt="Cajas.app" className="h-8 w-auto" />
                     </div>
                     {/* Mobile Close Button */}
                     <button onClick={toggleSidebar} className="md:hidden p-1 text-muted-foreground hover:text-foreground">
@@ -68,29 +69,37 @@ export default function Sidebar() {
                 {/* Mobile Header Elements */}
                 <div className="md:hidden px-4 py-4 border-b border-border space-y-4">
                     {/* Balance & Deposit */}
-                    <div className="bg-muted/30 rounded-lg p-3 space-y-3">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <img src="https://flagcdn.com/w20/ar.png" alt="ARS" className="w-5 h-auto rounded-sm" />
-                                <span className="font-mono font-bold text-sm">0,00 ARS</span>
+                    {user && (
+                        <div className="bg-muted/30 rounded-lg p-3 space-y-3">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                    <img src="https://flagcdn.com/w20/ar.png" alt="ARS" className="w-5 h-auto rounded-sm" />
+                                    <span className="font-mono font-bold text-sm">0,00 ARS</span>
+                                </div>
                             </div>
+                            <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm py-2 rounded-md transition-colors">
+                                Depositar
+                            </button>
                         </div>
-                        <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm py-2 rounded-md transition-colors">
-                            Depositar
-                        </button>
-                    </div>
+                    )}
                 </div>
 
                 {/* Navigation */}
                 <div className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
-                    <SidebarLink href="/" icon={<Gift className="w-5 h-5" />}>
+                    <SidebarLink href="/" icon={<Home className="w-5 h-5" />}>
                         Inicio
                     </SidebarLink>
                     <SidebarLink href="/cases" icon={<Gift className="w-5 h-5" />}>
                         Cajas
                     </SidebarLink>
-                    <SidebarLink href="/sponsorships" icon={<Handshake className="w-5 h-5" />}>
-                        Patrocinios
+                    <SidebarLink href="/ranking" icon={<Trophy className="w-5 h-5" />}>
+                        Ranking
+                    </SidebarLink>
+                    <SidebarLink href="/affiliates" icon={<Handshake className="w-5 h-5" />}>
+                        Afiliados
+                    </SidebarLink>
+                    <SidebarLink href="/daily-case" icon={<Gift className="w-5 h-5" />}>
+                        Caja diaria
                     </SidebarLink>
 
                     <SidebarLink href="/support" icon={<Headphones className="w-5 h-5" />}>

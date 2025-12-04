@@ -16,37 +16,39 @@ export default function CaseCard({ id, name, slug, price, image }: CaseCardProps
             className="group relative flex flex-col items-center"
         >
             {/* Card Container */}
-            <div className="relative w-full aspect-[3/4] bg-[#0f0f13] rounded-[2rem] border border-primary/20 p-6 flex flex-col items-center justify-between overflow-hidden transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.3)]">
+            <div className="relative w-fit flex flex-col items-center justify-center overflow-visible transition-all duration-300 group-hover:-translate-y-[2px]">
 
                 {/* Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary/20 blur-[50px] rounded-full pointer-events-none group-hover:bg-primary/30 transition-all" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-all" />
+
+                {/* Price Tag - Top Right with Blur */}
+                <div className="absolute top-4 right-4 z-20">
+                    <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-2">
+                        <span className="text-primary font-bold font-mono text-sm">
+                            ${price}
+                        </span>
+                    </div>
+                </div>
 
                 {/* Image */}
-                <div className="relative z-10 w-full flex-1 flex items-center justify-center">
+                <div className="relative z-10 p-1">
                     <img
-                        src={image}
+                        src="/img_caja.png"
                         alt={name}
-                        className="w-full h-auto object-contain transform group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl"
+                        className="w-auto h-auto max-w-[270px] object-contain drop-shadow-2xl rounded-xl"
                     />
                 </div>
 
-                {/* Title */}
-                <div className="relative z-10 mt-4 text-center">
-                    <h3 className="text-xl font-bold text-white tracking-wide group-hover:text-primary transition-colors">
-                        {name}
-                    </h3>
-                </div>
-
-                {/* Price Tag */}
-                <div className="relative z-10 mt-4 bg-[#1a1a20] border border-white/5 px-6 py-2 rounded-full">
-                    <span className="text-primary font-bold font-mono text-lg">
-                        ${price}
-                    </span>
+                {/* Title - Bottom Center */}
+                <div className="absolute bottom-6 z-20 flex justify-center w-full px-4">
+                    <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-3 py-1">
+                        <h3 className="text-lg font-bold text-white tracking-wide group-hover:text-primary transition-colors drop-shadow-md">
+                            {name}
+                        </h3>
+                    </div>
                 </div>
 
             </div>
-
-            {/* Outer Border Effect (Optional, simulated with box-shadow above) */}
         </Link>
     )
 }
