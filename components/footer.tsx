@@ -54,7 +54,7 @@ export default function Footer() {
 
                 <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
                     <div>
-                        {new Date().getFullYear()} Cajas.club. &copy; Reservados todos los derechos.
+                        {new Date().getFullYear()} Cajas.club &copy; Reservados todos los derechos.
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="flex items-center justify-center p-1 bg-red-600/10 border border-red-600/40 rounded text-red-600/80 font-bold text-[10px]">
