@@ -16,26 +16,26 @@ export default function CaseCard({ id, name, slug, price, image }: CaseCardProps
             className="group relative flex flex-col items-center"
         >
             {/* Card Container */}
-            <div className="relative w-fit flex flex-col items-center justify-center overflow-visible transition-all duration-300 group-hover:-translate-y-[2px]">
+            <div className="relative w-full flex flex-col items-center justify-center overflow-visible transition-all duration-300 group-hover:-translate-y-[2px]">
 
                 {/* Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-all" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square bg-primary/10 blur-[40px] sm:blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-all" />
 
                 {/* Price Tag - Top Right with Blur */}
-                <div className="absolute top-4 right-4 z-20">
-                    <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-2">
-                        <span className="text-primary font-bold font-mono text-sm">
+                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20">
+                    <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-1.5 sm:px-2">
+                        <span className="text-primary font-bold font-mono text-xs sm:text-sm">
                             ${price}
                         </span>
                     </div>
                 </div>
 
                 {/* Image */}
-                <div className="relative z-10 p-1">
+                <div className="relative z-10 p-1 w-full flex justify-center">
                     <img
-                        src="/img_caja.png"
+                        src={image}
                         alt={name}
-                        className="w-auto h-auto max-w-[270px] object-contain drop-shadow-2xl rounded-xl"
+                        className="w-full h-auto max-w-[160px] sm:max-w-[270px] object-contain drop-shadow-2xl rounded-xl"
                     />
                 </div>
 

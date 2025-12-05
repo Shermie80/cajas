@@ -102,8 +102,9 @@ export default function Sidebar({ user }: { user: User | null }) {
                         Caja diaria
                     </SidebarLink>
 
-                    <SidebarLink href="/support" icon={<Headphones className="w-5 h-5" />}>
-                        Soporte en vivo
+                    {/* Admin Link - In a real app, check role here or pass it as prop */}
+                    <SidebarLink href="/admin/create-case" icon={<Box className="w-5 h-5" />}>
+                        Crear Caja (Admin)
                     </SidebarLink>
                 </div>
 
