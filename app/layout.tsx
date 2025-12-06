@@ -31,13 +31,17 @@ export default async function RootLayout({
   if (user) {
     const { data: profile } = await supabase
       .from('profiles')
-      .select('avatar_url')
+      .select('avatar_url, role')
       .eq('id', user.id)
       .single();
 
-    if (profile?.avatar_url) {
-      // Override the avatar_url in user_metadata with the one from the profile
-      user.user_metadata.avatar_url = profile.avatar_url;
+    if (profile) {
+      if (profile.avatar_url) {
+        user.user_metadata.avatar_url = profile.avatar_url;
+      }
+      if (profile.role) {
+        user.user_metadata.role = profile.role;
+      }
     }
   }
 

@@ -188,12 +188,11 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
                     </div>
 
                     {/* Center Line Verification */}
-                    <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-primary/30 z-20 pointer-events-none" />
+                    <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-primary/30 -ml-px z-20 pointer-events-none" />
 
                     {/* Side Fades */}
                     <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#050505] to-transparent z-20 pointer-events-none" />
                     <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#050505] to-transparent z-20 pointer-events-none" />
-
                     {/* Scrolling Track */}
                     <div
                         ref={windowRef}
@@ -277,7 +276,7 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
 
                         <div className="relative bg-[#0F0F0F] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-8 flex flex-col items-center">
                             <div className="absolute top-4 right-4">
-                                <button onClick={() => setShowWinnerModal(false)} className="text-gray-500 hover:text-white transition-colors">
+                                <button onClick={() => setShowWinnerModal(false)} className="text-gray-500 hover:text-white/80 cursor-pointer rounded-lg hover:bg-white/5 p-1.5 transition-colors">
                                     <X size={24} />
                                 </button>
                             </div>
@@ -296,7 +295,7 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
                                 <img
                                     src={winner.image_url}
                                     alt={winner.name}
-                                    className="relative w-48 h-48 object-contain z-10 drop-shadow-2xl"
+                                    className="relative w-36 h-36 object-cover z-10 drop-shadow-2xl"
                                 />
                             </div>
 
@@ -312,7 +311,7 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
                             <div className="w-full mt-8">
                                 <button
                                     onClick={() => setShowWinnerModal(false)}
-                                    className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)]"
+                                    className="w-full cursor-pointer bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)]"
                                 >
                                     Recoger Premio
                                 </button>

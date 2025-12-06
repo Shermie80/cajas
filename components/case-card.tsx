@@ -22,8 +22,8 @@ export default function CaseCard({ id, name, slug, price, image }: CaseCardProps
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square bg-primary/10 blur-[40px] sm:blur-[60px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-all" />
 
                 {/* Price Tag - Top Right with Blur */}
-                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20">
-                    <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-1.5 sm:px-2">
+                <div className="absolute top-2 right-2 sm:top-4 sm:right-6 z-20">
+                    <div className="relative leading-none tracking-wider overflow-hidden rounded-lg border border-white/10 bg-black/70 backdrop-blur-md px-1.5 sm:px-2 truncate">
                         <span className="text-primary font-bold font-mono text-xs sm:text-sm">
                             ${price}
                         </span>

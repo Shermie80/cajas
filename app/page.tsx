@@ -17,7 +17,7 @@ export default async function Home() {
       <div>
         <h2 className="text-2xl font-bold mb-6 text-center uppercase tracking-wider text-white/80">Contenedor Cajas</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
           {cases?.map((box) => (
             <CaseCard
               key={box.id}

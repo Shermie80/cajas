@@ -13,7 +13,8 @@ import {
     X,
     Box,
     Home,
-    Trophy
+    Trophy,
+    LifeBuoy
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTheme } from '@/components/theme-provider'
@@ -90,7 +91,7 @@ export default function Sidebar({ user }: { user: User | null }) {
                         Inicio
                     </SidebarLink>
                     <SidebarLink href="/cases" icon={<Gift className="w-5 h-5" />}>
-                        Cajas
+                        Sorteos
                     </SidebarLink>
                     <SidebarLink href="/ranking" icon={<Trophy className="w-5 h-5" />}>
                         Ranking
@@ -102,14 +103,43 @@ export default function Sidebar({ user }: { user: User | null }) {
                         Caja diaria
                     </SidebarLink>
 
-                    {/* Admin Link - In a real app, check role here or pass it as prop */}
-                    <SidebarLink href="/admin/create-case" icon={<Box className="w-5 h-5" />}>
-                        Crear Caja (Admin)
+                    {/* Support Link */}
+                    <SidebarLink href="/support" icon={<LifeBuoy className="w-5 h-5" />}>
+                        Soporte
                     </SidebarLink>
+
+                    {/* Admin Link */}
+                    {user?.user_metadata?.role === 'admin' && (
+                        <SidebarLink href="/admin/create-case" icon={<Box className="w-5 h-5" />}>
+                            Crear Caja (Admin)
+                        </SidebarLink>
+                    )}
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-4 border-t border-border mt-auto">
+                <div className="p-4 mt-auto space-y-4">
+                    {/* Stats Section */}
+                    <div className="space-y-2">
+                        <StatsCard
+                            label="Online"
+                            value="562"
+                            color="text-white"
+                            image="/onlines.png"
+                        />
+                        <StatsCard
+                            label="Usuarios"
+                            value="112.902"
+                            color="text-white"
+                            image="/users.png"
+                        />
+                        <StatsCard
+                            label="Cajas Abiertas"
+                            value="892.211"
+                            color="text-white"
+                            image="/cajas.png"
+                        />
+                    </div>
+
                     <div className="flex items-center justify-between bg-muted/50 rounded-full p-1">
                         <button
                             onClick={() => setTheme('dark')}
@@ -157,5 +187,19 @@ function SidebarLink({ href, icon, children }: { href: string, icon: React.React
             </span>
             <span className="font-medium text-sm">{children}</span>
         </Link>
+    )
+}
+
+function StatsCard({ label, value, color, image }: { label: string, value: string, color: string, image: string }) {
+    return (
+        <div className="bg-muted/20 border border-white/5 rounded-lg p-3 flex items-center space-x-2">
+            <div className="bg-background/50 p-2 rounded-md shrink-0">
+                <img src={image} alt={label} className="w-6 h-6 object-contain" />
+            </div>
+            <div>
+                <p className="text-xs text-muted-foreground tracking-wider mb-0.5">{label}</p>
+                <p className={cn("text-lg  font-bold leading-none", color)}>{value}</p>
+            </div>
+        </div>
     )
 }

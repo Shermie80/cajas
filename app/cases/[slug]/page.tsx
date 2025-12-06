@@ -56,7 +56,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
     if (!caseItemsData || caseItemsData.length === 0) {
         return (
-            <main className="min-h-screen pt-24 pb-20 bg-[#050505]">
+            <main className="min-h-screen pt-24 pb-20">
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-3xl font-bold text-white mb-4">{caseData.name}</h1>
                     <p className="text-gray-500">Esta caja no tiene items asignados todavía.</p>
@@ -85,7 +85,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
     })
 
     return (
-        <main className="min-h-screen pt-24 pb-20 bg-[#050505]">
+        <main className="min-h-screen pt-24 pb-20">
             <div className="container mx-auto px-4">
 
                 {/* Header Info */}
