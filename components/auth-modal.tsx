@@ -91,7 +91,7 @@ export default function AuthModal() {
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="relative w-full max-w-md bg-card border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                    className="relative w-full max-w-md bg-card border border-white/5 rounded-2xl shadow-2xl overflow-hidden"
                 >
                     {/* Close Button */}
                     <button
@@ -109,7 +109,7 @@ export default function AuthModal() {
                             <p className="text-gray-400 text-sm">
                                 {authView === 'login'
                                     ? 'Ingresa tus credenciales para continuar'
-                                    : 'Únete a la mejor comunidad de cajas'}
+                                    : 'Únete a la mejor comunidad de apertura de cajas'}
                             </p>
                         </div>
 
@@ -117,7 +117,7 @@ export default function AuthModal() {
                         <button
                             onClick={handleGoogleLogin}
                             disabled={isLoading}
-                            className="w-full btn-secondary font-bold py-3 rounded-lg transition-all transform active:scale-95 flex items-center justify-center space-x-2 mb-6 cursor-pointer"
+                            className="w-full border border-white/5 bg-white/5 font-bold py-3 rounded-lg transition-all transform active:scale-95 flex items-center justify-center space-x-2 mb-6 cursor-pointer"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -145,7 +145,7 @@ export default function AuthModal() {
                                 <div className="w-full border-t border-white/10"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-[#1a1a1a] text-gray-500">O continúa con email</span>
+                                <span className="px-2 bg-card text-gray-500">O continúa con email</span>
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@ export default function AuthModal() {
                                             type="text"
                                             required
                                             placeholder="Tu nombre"
-                                            className="input-primary pl-10"
+                                            className="w-full mt-1 border border-white/5 bg-white/5 font-bold py-3 rounded-lg pl-10 focus:outline-none focus:border-primary"
                                         />
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@ export default function AuthModal() {
                                         type="email"
                                         required
                                         placeholder="tu@email.com"
-                                        className="input-primary pl-10"
+                                        className="w-full mt-1 border border-white/5 bg-white/5 font-bold py-3 rounded-lg pl-10 focus:outline-none focus:border-primary"
                                     />
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ export default function AuthModal() {
                                         type="password"
                                         required
                                         placeholder="••••••••"
-                                        className="input-primary pl-10"
+                                        className="w-full mt-1 border border-white/5 bg-white/5 font-bold py-3 rounded-lg pl-10 focus:outline-none focus:border-primary"
                                     />
                                 </div>
                             </div>

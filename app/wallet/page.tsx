@@ -13,7 +13,7 @@ export default function WalletPage() {
 
     // Mock data
     const balance = 0.00
-    const minAmount = 10253.00
+    const minAmount = 1000.00
 
     const handlePercentageClick = (percentage: number) => {
         if (balance > 0) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Bai_Jamjuree } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
@@ -9,7 +9,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModalProvider } from "@/components/modal-provider";
 import AuthModal from "@/components/auth-modal";
 
-const inter = Inter({ subsets: ["latin"] });
+const baiJamjuree = Bai_Jamjuree({
+  subsets: ["latin"],
+  weight: ['200', '300', '400', '500', '600', '700'],
+  variable: '--font-bai-jamjuree'
+});
 
 export const metadata: Metadata = {
   title: "Cajas.club",
@@ -47,7 +51,7 @@ export default async function RootLayout({
 
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={baiJamjuree.className}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <ModalProvider>
             <div className="flex min-h-screen bg-background text-foreground">

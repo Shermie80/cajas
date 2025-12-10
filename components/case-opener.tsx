@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { cn, formatCurrency } from "@/lib/utils"
 import { ChevronUp, ChevronDown, X, ArrowLeft, Volume2 } from "lucide-react"
+import { useModal } from "@/components/modal-provider"
 import Link from "next/link"
 
 interface Item {
@@ -22,6 +23,7 @@ interface CaseOpenerProps {
 }
 
 export default function CaseOpener({ items, casePrice, caseName, caseId }: CaseOpenerProps) {
+    const { openAuthModal } = useModal()
     const [isSpinning, setIsSpinning] = useState(false)
     const [isMuted, setIsMuted] = useState(false)
     const [reel, setReel] = useState<Item[]>([])
@@ -109,7 +111,14 @@ export default function CaseOpener({ items, casePrice, caseName, caseId }: CaseO
                 })
             })
 
-            if (!response.ok) throw new Error('Failed to open case')
+            if (!response.ok) {
+                if (response.status === 401) {
+                    openAuthModal('login')
+                    setIsSpinning(false)
+                    return
+                }
+                throw new Error('Failed to open case')
+            }
 
             const data = await response.json()
             const wonItem = data.winner

@@ -181,8 +181,8 @@ export default function ProfilePage() {
                     >
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h1 className="text-2xl font-bold text-foreground mb-2">Profile Settings</h1>
-                                <p className="text-muted-foreground text-sm">Manage your account information</p>
+                                <h1 className="text-2xl font-bold text-foreground mb-2">Configuración del perfil</h1>
+                                <p className="text-muted-foreground text-sm">Administrar la información de su cuenta</p>
                             </div>
                             <div className="relative group cursor-pointer" onClick={handleAvatarClick}>
                                 <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center overflow-hidden relative">
@@ -223,14 +223,14 @@ export default function ProfilePage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Full Name */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-muted-foreground">Full Name</label>
+                                    <label className="text-sm font-medium text-muted-foreground">Nombre</label>
                                     <div className="relative">
                                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                         <input
                                             type="text"
                                             value={formData.fullName}
                                             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                            className="w-full bg-muted/50 border border-input rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
+                                            className="w-full bg-muted/50 mt-1 border border-input rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -238,14 +238,14 @@ export default function ProfilePage() {
 
                                 {/* DNI */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-muted-foreground">DNI / ID Number</label>
+                                    <label className="text-sm font-medium text-muted-foreground">DNI</label>
                                     <div className="relative">
                                         <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                         <input
                                             type="text"
                                             value={formData.dni}
                                             onChange={(e) => setFormData({ ...formData, dni: e.target.value })}
-                                            className="w-full bg-muted/50 border border-input rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
+                                            className="w-full bg-muted/50 border border-input mt-1 rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
                                             placeholder="12.345.678"
                                         />
                                     </div>
@@ -253,14 +253,14 @@ export default function ProfilePage() {
 
                                 {/* Phone */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-muted-foreground">Phone Number</label>
+                                    <label className="text-sm font-medium text-muted-foreground">Número de teléfono</label>
                                     <div className="relative">
                                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                         <input
                                             type="tel"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                            className="w-full bg-muted/50 border border-input rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
+                                            className="w-full bg-muted/50 border border-input mt-1 rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm"
                                             placeholder="+54 9 11 1234-5678"
                                         />
                                     </div>
@@ -268,14 +268,14 @@ export default function ProfilePage() {
 
                                 {/* Email (Read Only) */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-muted-foreground">Email Address</label>
+                                    <label className="text-sm font-medium text-muted-foreground">Correo electrónico</label>
                                     <div className="relative">
                                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                         <input
                                             type="email"
                                             value={formData.email}
                                             readOnly
-                                            className="w-full bg-muted/30 border border-input rounded-lg py-2.5 pl-10 pr-4 text-muted-foreground cursor-not-allowed text-sm"
+                                            className="w-full bg-muted/30 border border-input mt-1 rounded-lg py-2.5 pl-10 pr-4 text-muted-foreground cursor-not-allowed text-sm"
                                         />
                                     </div>
                                 </div>
@@ -283,13 +283,13 @@ export default function ProfilePage() {
 
                             {/* Address */}
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-muted-foreground">Shipping Address</label>
+                                <label className="text-sm font-medium text-muted-foreground">Dirección de envío</label>
                                 <div className="relative">
                                     <MapPin className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                                     <textarea
                                         value={formData.address}
                                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                        className="w-full bg-muted/50 border border-input rounded-lg py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all min-h-[100px] resize-none text-sm"
+                                        className="w-full bg-muted/50 border border-input rounded-lg mt-1 py-2.5 pl-10 pr-4 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all min-h-[100px] resize-none text-sm"
                                         placeholder="Street, Number, City, Province, Zip Code"
                                     />
                                 </div>
@@ -299,14 +299,14 @@ export default function ProfilePage() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="flex items-center space-x-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded-lg font-medium transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="flex items-center cursor-pointer space-x-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded-lg font-medium transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                                 >
                                     {isLoading ? (
                                         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                                     ) : (
                                         <>
                                             <Save className="w-4 h-4" />
-                                            <span>Save Changes</span>
+                                            <span>Guardar Cambios</span>
                                         </>
                                     )}
                                 </button>

@@ -29,7 +29,7 @@ export default function Sidebar({ user }: { user: User | null }) {
             {/* Mobile Toggle Button */}
             <button
                 onClick={toggleSidebar}
-                className="fixed top-4 left-4 z-50 p-2 bg-card border border-border rounded-lg md:hidden"
+                className="fixed top-4 left-4 z-[100] p-2 bg-card border border-border rounded-lg md:hidden"
             >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -49,7 +49,7 @@ export default function Sidebar({ user }: { user: User | null }) {
 
             {/* Sidebar Content */}
             <aside className={cn(
-                "fixed left-0 top-0 bottom-0 w-64 bg-card border-r border-border flex flex-col z-50 transition-transform duration-300 ease-in-out md:translate-x-0",
+                "fixed left-0 top-0 bottom-0 w-64 bg-card border-r border-border flex flex-col z-[99] transition-transform duration-300 ease-in-out md:translate-x-0",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 {/* Logo Area */}

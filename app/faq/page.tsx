@@ -54,12 +54,6 @@ export default function FAQPage() {
                     </p>
                 </div>
             </div>
-
-            <div className="mt-12 text-center">
-                <Link href="/" className="text-muted-foreground hover:text-white transition-colors inline-flex items-center gap-2">
-                    <ArrowLeft className="w-4 h-4" /> Volver al inicio
-                </Link>
-            </div>
         </div>
     )
 }

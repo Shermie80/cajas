@@ -32,7 +32,7 @@ export default function Header({ user }: { user: User | null }) {
     }, [])
 
     return (
-        <header className="fixed top-0 right-0 left-0 md:left-64 h-16 bg-card border-b border-border z-30 flex items-center justify-end px-4 md:px-6 space-x-4 transition-all duration-300">
+        <header className="fixed top-0 right-0 left-0 md:left-64 h-16 bg-card border-b border-border z-50 flex items-center justify-end px-4 md:px-6 space-x-4 transition-all duration-300">
 
             {/* Balance & Deposit - Only for Logged In Users & Hidden on Mobile */}
             {user && (

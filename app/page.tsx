@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import CaseCard from '@/components/case-card'
+import CaseBrowser from '@/components/case-browser'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -43,20 +43,7 @@ export default async function Home() {
 
       {/* Cases Container */}
       <div>
-        <h2 className="text-2xl font-bold mb-6 text-center uppercase tracking-wider text-white/80">Contenedor Cajas</h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
-          {cases?.map((box) => (
-            <CaseCard
-              key={box.id}
-              id={box.id}
-              name={box.name}
-              slug={box.slug}
-              price={box.price}
-              image={box.image_url || '/asset_iPhone.png'}
-            />
-          ))}
-        </div>
+        <CaseBrowser initialCases={cases} />
       </div>
     </div>
   )

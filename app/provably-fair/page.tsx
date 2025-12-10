@@ -11,7 +11,7 @@ export default function ProvablyFairPage() {
                     <ShieldCheck className="w-12 h-12 text-primary drop-shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white uppercase italic">
-                    Sistema <span className="text-primary text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Provably Fair</span>
+                    Sistema <span className="text-primary text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500 pr-2">Provably Fair</span>
                 </h1>
                 <p className="text-lg text-gray-400 max-w-2xl">
                     En Cajas.club, la transparencia no es una opción, es nuestra base.
@@ -92,17 +92,6 @@ export default function ProvablyFairPage() {
                         </p>
                     </div>
                 </div>
-            </div>
-
-            {/* Back Button */}
-            <div className="mt-20 text-center">
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 text-muted-foreground hover:text-white transition-colors px-6 py-3 rounded-full hover:bg-white/5"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                    Volver al inicio
-                </Link>
             </div>
         </div>
     )

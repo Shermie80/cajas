@@ -11,7 +11,7 @@ export default function ContactPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 {/* Email Support */}
-                <div className="bg-[#1a1d26] border border-white/5 rounded-2xl p-8 text-center hover:border-primary/50 transition-colors group">
+                <div className="bg-card border border-white/5 rounded-2xl p-8 text-center transition-colors group">
                     <div className="inline-flex items-center justify-center p-4 bg-blue-500/10 rounded-full mb-6 group-hover:scale-110 transition-transform">
                         <Mail className="w-8 h-8 text-blue-400" />
                     </div>
@@ -25,7 +25,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Discord Support */}
-                <div className="bg-[#1a1d26] border border-white/5 rounded-2xl p-8 text-center hover:border-primary/50 transition-colors group">
+                <div className="bg-card border border-white/5 rounded-2xl p-8 text-center transition-colors group">
                     <div className="inline-flex items-center justify-center p-4 bg-[#5865F2]/10 rounded-full mb-6 group-hover:scale-110 transition-transform">
                         <MessageSquare className="w-8 h-8 text-[#5865F2]" />
                     </div>
@@ -40,7 +40,7 @@ export default function ContactPage() {
             </div>
 
             {/* Form Section */}
-            <div className="bg-[#13151b] border border-white/5 rounded-2xl p-8">
+            <div className="bg-card border border-white/5 rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                     <Send className="w-5 h-5 text-primary" />
                     Envíanos un mensaje
@@ -78,16 +78,7 @@ export default function ContactPage() {
                     <button type="button" className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all hover:shadow-[0_0_20px_rgba(var(--primary),0.3)]">
                         Enviar Mensaje
                     </button>
-                    <p className="text-xs text-center text-gray-500">
-                        * Este formulario es una demostración visual. Por favor usa los botones de arriba.
-                    </p>
                 </form>
-            </div>
-
-            <div className="mt-12 text-center">
-                <Link href="/" className="text-muted-foreground hover:text-white transition-colors inline-flex items-center gap-2">
-                    <ArrowLeft className="w-4 h-4" /> Volver al inicio
-                </Link>
             </div>
         </div>
     )

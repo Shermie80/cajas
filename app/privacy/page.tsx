@@ -19,15 +19,13 @@ export default function PrivacyPage() {
 
                 <section>
                     <h2 className="text-2xl font-bold text-white mb-4">2. Uso de la Información</h2>
-                    <p>
-                        Utilizamos sus datos para:
-                        <ul className="list-disc pl-5 mt-2 space-y-1">
-                            <li>Proveer y mantener el servicio.</li>
-                            <li>Procesar transacciones de depósito y retiro.</li>
-                            <li>Detectar y prevenir el fraude.</li>
-                            <li>Cumplir con obligaciones legales.</li>
-                        </ul>
-                    </p>
+                    <p> Utilizamos sus datos para:</p>
+                    <ul className="list-disc pl-5 mt-2 space-y-1">
+                        <li>Proveer y mantener el servicio.</li>
+                        <li>Procesar transacciones de depósito y retiro.</li>
+                        <li>Detectar y prevenir el fraude.</li>
+                        <li>Cumplir con obligaciones legales.</li>
+                    </ul>
                 </section>
 
                 <section>
@@ -50,12 +48,6 @@ export default function PrivacyPage() {
                         Implementamos medidas de seguridad estándar de la industria, incluyendo encriptación SSL y protección de bases de datos. Sin embargo, ningún método de transmisión por Internet es 100% seguro.
                     </p>
                 </section>
-            </div>
-
-            <div className="mt-12">
-                <Link href="/" className="text-muted-foreground hover:text-white transition-colors inline-flex items-center gap-2">
-                    <ArrowLeft className="w-4 h-4" /> Volver al inicio
-                </Link>
             </div>
         </div>
     )
