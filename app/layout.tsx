@@ -12,7 +12,7 @@ import AuthModal from "@/components/auth-modal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cajas.app - Premium Case Opening",
+  title: "Cajas.club",
   description: "Open cases, win skins, provably fair.",
   icons: {
     icon: '/fav.png',

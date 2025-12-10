@@ -9,6 +9,7 @@ export default function WalletPage() {
     const [activeTab, setActiveTab] = useState('depositar')
     const [amount, setAmount] = useState('')
     const [depositAmount, setDepositAmount] = useState('7000')
+    const [paymentMethod, setPaymentMethod] = useState('pago_movil')
 
     // Mock data
     const balance = 0.00
@@ -53,7 +54,7 @@ export default function WalletPage() {
                                         {activeTab === tab.id && (
                                             <motion.div
                                                 layoutId="activeTab"
-                                                className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(34,197,94,0.5)]"
+                                                className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(253,176,34,0.5)]"
                                             />
                                         )}
                                         <tab.icon className={cn("w-5 h-5 transition-colors", activeTab === tab.id ? "text-primary" : "group-hover:text-foreground")} />
@@ -79,7 +80,7 @@ export default function WalletPage() {
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-muted-foreground">Moneda del depósito</label>
                                         <div className="relative group">
-                                            <button className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
+                                            <button className="w-full btn-secondary rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
                                                 <div className="flex items-center space-x-3">
                                                     <img src="https://flagcdn.com/w40/ar.png" alt="ARS" className="w-6 h-4 rounded-sm shadow-sm" />
                                                     <span className="font-bold tracking-wide">ARS</span>
@@ -98,24 +99,37 @@ export default function WalletPage() {
                                     {/* Deposit Method */}
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-muted-foreground">Método de depósito</label>
-                                        <div className="relative group">
-                                            <button className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
+                                        <div className="space-y-3">
+                                            <button
+                                                onClick={() => setPaymentMethod('pago_movil')}
+                                                className={cn(
+                                                    "w-full btn-secondary rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300",
+                                                    paymentMethod === 'pago_movil' && "border-primary bg-primary/10"
+                                                )}
+                                            >
                                                 <div className="flex items-center space-x-3">
                                                     <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">MP</div>
                                                     <span className="font-medium">Mercado Pago</span>
                                                 </div>
-                                                <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                                {paymentMethod === 'pago_movil' && (
+                                                    <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
+                                                )}
                                             </button>
-                                        </div>
-                                    </div>
 
-                                    {/* Document Type */}
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-muted-foreground">Tipo de documento</label>
-                                        <div className="relative group">
-                                            <button className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
-                                                <span className="font-medium">CUIT/CUIL</span>
-                                                <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                            <button
+                                                onClick={() => setPaymentMethod('binance')}
+                                                className={cn(
+                                                    "w-full btn-secondary rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300",
+                                                    paymentMethod === 'binance' && "border-primary bg-primary/10"
+                                                )}
+                                            >
+                                                <div className="flex items-center space-x-3">
+                                                    <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-[10px] font-bold text-black">B</div>
+                                                    <span className="font-medium">Binance Pay</span>
+                                                </div>
+                                                {paymentMethod === 'binance' && (
+                                                    <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
+                                                )}
                                             </button>
                                         </div>
                                     </div>
@@ -125,7 +139,8 @@ export default function WalletPage() {
                                         <label className="text-sm font-medium text-muted-foreground">Número de CUIT/CUIL <span className="text-red-500">*</span></label>
                                         <input
                                             type="text"
-                                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all duration-300"
+                                            className="input-primary"
+                                            placeholder="20-12345678-9"
                                         />
                                     </div>
 
@@ -136,7 +151,7 @@ export default function WalletPage() {
                                             type="number"
                                             value={depositAmount}
                                             onChange={(e) => setDepositAmount(e.target.value)}
-                                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all duration-300 font-mono"
+                                            className="input-primary font-mono text-lg font-bold"
                                         />
                                         <div className="grid grid-cols-3 gap-3 mt-3">
                                             {depositPresets.map((preset) => (
@@ -146,8 +161,8 @@ export default function WalletPage() {
                                                     className={cn(
                                                         "py-3 rounded-xl text-sm font-bold transition-all duration-200 border",
                                                         depositAmount === preset
-                                                            ? "bg-primary/10 border-primary text-primary shadow-[0_0_10px_rgba(34,197,94,0.2)]"
-                                                            : "bg-black/20 border-white/5 text-muted-foreground hover:bg-white/5 hover:border-white/10 hover:text-foreground"
+                                                            ? "bg-primary/10 border-primary text-primary shadow-[0_0_10px_rgba(253,176,34,0.2)]"
+                                                            : "bg-white/5 border-white/5 text-muted-foreground hover:bg-white/5 hover:border-white/10 hover:text-foreground"
                                                     )}
                                                 >
                                                     {parseInt(preset).toLocaleString('es-AR', { minimumFractionDigits: 2 })} ARS
@@ -157,8 +172,8 @@ export default function WalletPage() {
                                     </div>
 
                                     {/* Submit Button */}
-                                    <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-[0.98] mt-6 flex items-center justify-center space-x-2">
-                                        <span>Depositar vía Mercado Pago</span>
+                                    <button className="w-full btn-primary py-4 rounded-xl mt-6 flex items-center justify-center space-x-2 text-lg">
+                                        <span>Depositar</span>
                                     </button>
 
                                     {/* Info */}
@@ -168,7 +183,6 @@ export default function WalletPage() {
                                             <div className="space-y-1">
                                                 <p>1. El monto de tu transferencia debe COINCIDIR con el monto del envío.</p>
                                                 <p>2. Cada ID de pedido SOLO puede utilizarse una vez, para evitar duplicados.</p>
-                                                <p>3. Por favor, siga las directrices de depósito para realizarlo, de lo contrario su depósito se perderá.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -177,11 +191,18 @@ export default function WalletPage() {
 
                             {activeTab === 'retirar' && (
                                 <div className="space-y-8 max-w-2xl">
+                                    <div className="flex items-center space-x-3 mb-6">
+                                        <div className="p-3 bg-red-500/10 rounded-xl">
+                                            <ArrowUpRight className="w-6 h-6 text-red-500" />
+                                        </div>
+                                        <h2 className="text-xl font-bold">Retirar Fondos</h2>
+                                    </div>
+
                                     {/* Currency Selector */}
                                     <div className="space-y-3">
                                         <label className="text-sm font-medium text-muted-foreground">Retirar moneda</label>
                                         <div className="relative group">
-                                            <button className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3.5 flex items-center justify-between text-foreground hover:border-primary/50 hover:shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all duration-300">
+                                            <button className="w-full btn-secondary rounded-xl px-4 py-3 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
                                                 <div className="flex items-center space-x-3">
                                                     <img src="https://flagcdn.com/w40/ar.png" alt="ARS" className="w-6 h-4 rounded-sm shadow-sm" />
                                                     <span className="font-bold tracking-wide">ARS</span>
@@ -194,25 +215,16 @@ export default function WalletPage() {
                                     {/* Withdrawal Method */}
                                     <div className="space-y-3">
                                         <label className="text-sm font-medium text-muted-foreground">Método de Retiro</label>
-                                        <div className="relative group">
-                                            <button className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3.5 flex items-center justify-between text-foreground hover:border-primary/50 hover:shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all duration-300">
-                                                <div className="flex items-center space-x-3">
-                                                    <span className="text-red-500 font-bold">AstroPay</span>
-                                                    <span className="font-medium text-foreground/80">AstroPay1</span>
+                                        <button className="w-full btn-secondary rounded-xl px-4 py-3.5 flex items-center justify-between text-foreground hover:border-primary/50 transition-all duration-300">
+                                            <div className="flex items-center space-x-3">
+                                                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20 text-red-500 font-bold text-xs">A</div>
+                                                <div className="flex flex-col items-start">
+                                                    <span className="text-sm font-bold">AstroPay</span>
+                                                    <span className="text-xs text-muted-foreground">AstroPay1</span>
                                                 </div>
-                                                <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* Phone Number */}
-                                    <div className="space-y-3">
-                                        <label className="text-sm font-medium text-muted-foreground">Teléfono con Código de País <span className="text-red-500">*</span></label>
-                                        <input
-                                            type="text"
-                                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all duration-300"
-                                            placeholder=""
-                                        />
+                                            </div>
+                                            <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                                        </button>
                                     </div>
 
                                     {/* Amount */}
@@ -226,8 +238,8 @@ export default function WalletPage() {
                                                 type="number"
                                                 value={amount}
                                                 onChange={(e) => setAmount(e.target.value)}
-                                                className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all duration-300 font-mono"
-                                                placeholder="0"
+                                                className="input-primary font-mono text-lg font-bold"
+                                                placeholder="0.00"
                                             />
                                         </div>
 
@@ -242,14 +254,11 @@ export default function WalletPage() {
                                                 </button>
                                             ))}
                                         </div>
-                                        <div className="flex justify-end mt-2">
-                                            <span className="text-xs text-muted-foreground">Disponible: <span className="text-primary font-mono">{balance.toLocaleString('es-AR', { minimumFractionDigits: 2 })} ARS</span></span>
-                                        </div>
                                     </div>
 
                                     {/* Submit Button */}
-                                    <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-[0.98] mt-6 uppercase tracking-wide text-sm">
-                                        Retirar
+                                    <button className="w-full btn-primary py-4 rounded-xl mt-6 uppercase tracking-wide text-sm font-bold">
+                                        Solicitar Retiro
                                     </button>
                                 </div>
                             )}

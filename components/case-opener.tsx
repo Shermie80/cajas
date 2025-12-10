@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import { cn, formatCurrency } from "@/lib/utils"
-import { ChevronUp, ChevronDown, X } from "lucide-react"
+import { ChevronUp, ChevronDown, X, ArrowLeft, Volume2 } from "lucide-react"
+import Link from "next/link"
 
 interface Item {
     id: string
@@ -17,20 +18,21 @@ interface CaseOpenerProps {
     items: Item[]
     casePrice: number
     caseName: string
+    caseId: string
 }
 
-export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerProps) {
+export default function CaseOpener({ items, casePrice, caseName, caseId }: CaseOpenerProps) {
     const [isSpinning, setIsSpinning] = useState(false)
+    const [isMuted, setIsMuted] = useState(false)
     const [reel, setReel] = useState<Item[]>([])
     const [winner, setWinner] = useState<Item | null>(null)
     const [showWinnerModal, setShowWinnerModal] = useState(false)
 
-    // Config
+    // Config cards
     const CARD_WIDTH = 180
-    const GAP = 2 // Small gap for line separator
+    const GAP = 2
     const TOTAL_ITEM_WIDTH = CARD_WIDTH + GAP
     const SPIN_DURATION = 8000
-    // We land on index 75. 
     const WINNER_INDEX = 75
 
     const reelContainerRef = useRef<HTMLDivElement>(null)
@@ -81,71 +83,125 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
     }, [reel, isSpinning])
 
 
-    const startSpin = () => {
+    useEffect(() => {
+        if (showWinnerModal && !isMuted) {
+            const audio = new Audio('/fin.mp3')
+            audio.play().catch(() => { })
+        }
+    }, [showWinnerModal, isMuted])
+
+    const startSpin = async () => {
         if (isSpinning) return
 
         setIsSpinning(true)
         setShowWinnerModal(false)
         setWinner(null)
 
-        // 1. Determine Winner 
-        const wonItem = pickWeightedWinner(items)
-        setWinner(wonItem)
+        try {
+            // 1. Request Winner from Server (Provably Fair)
+            const response = await fetch('/api/cases/open', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    caseId: caseId, // We need caseId prop or context. Currently prop 'caseName' is passed but id? 
+                    // The component props need 'caseId'. 
+                    // clientSeed: '...' // Optional: Allow user to set seed
+                })
+            })
 
-        // 2. Build the Reel
-        // We need the start to match what is currently visible so it doesn't jump
-        // But since we are modifying the 'reel' state, React will re-render.
-        // To make it smooth, we keep the first few items same as 'initialReel' if possible, 
-        // OR we just accept a frame jump (usually imperceptible if we start at same offset).
+            if (!response.ok) throw new Error('Failed to open case')
 
-        // Actually, easiest way is: Build a HUGE reel where the first N items match the current 'reel' state 
-        // up to the point we need.
-        // Let's just generate a fresh massive reel.
-        const filler = shuffle([...items])
-        const newReel: Item[] = []
+            const data = await response.json()
+            const wonItem = data.winner
 
-        for (let i = 0; i < 110; i++) {
-            if (i === WINNER_INDEX) {
-                newReel.push(wonItem)
-            } else {
-                newReel.push(filler[i % filler.length])
+            setWinner(wonItem)
+
+            // 2. Build the Reel around the Winner
+            const filler = shuffle([...items])
+            const newReel: Item[] = []
+
+            for (let i = 0; i < 110; i++) {
+                if (i === WINNER_INDEX) {
+                    newReel.push(wonItem)
+                } else {
+                    newReel.push(filler[i % filler.length])
+                }
             }
-        }
-        setReel(newReel)
+            setReel(newReel)
 
-        // 3. Animate
-        setTimeout(() => {
-            if (reelContainerRef.current && windowRef.current) {
-                // Reset to start position (re-apply the start offset calculation)
-                // We want to start from the *same visually aligned position*
-                // If we assume we start at index 5:
-                const windowWidth = windowRef.current.clientWidth
+            // 3. Animate
+            setTimeout(() => {
+                if (reelContainerRef.current && windowRef.current) {
+                    const windowWidth = windowRef.current.clientWidth
 
-                // Force reset to start
-                const startCenter = (START_INDEX * TOTAL_ITEM_WIDTH) + (CARD_WIDTH / 2)
-                const startTranslate = (windowWidth / 2) - startCenter
+                    // Force reset to start
+                    const startCenter = (START_INDEX * TOTAL_ITEM_WIDTH) + (CARD_WIDTH / 2)
+                    const startTranslate = (windowWidth / 2) - startCenter
 
-                reelContainerRef.current.style.transition = 'none'
-                reelContainerRef.current.style.transform = `translateX(${startTranslate}px)`
+                    reelContainerRef.current.style.transition = 'none'
+                    reelContainerRef.current.style.transform = `translateX(${startTranslate}px)`
 
-                // Force reflow
-                reelContainerRef.current.getBoundingClientRect()
+                    // Force reflow
+                    reelContainerRef.current.getBoundingClientRect()
 
-                // Calculate End position
-                const winningCardCenter = (WINNER_INDEX * TOTAL_ITEM_WIDTH) + (CARD_WIDTH / 2)
-                const finalTranslate = (windowWidth / 2) - winningCardCenter
+                    // Calculate End position
+                    const winningCardCenter = (WINNER_INDEX * TOTAL_ITEM_WIDTH) + (CARD_WIDTH / 2)
+                    const finalTranslate = (windowWidth / 2) - winningCardCenter
 
-                // Ease out cubic for realistic braking
-                reelContainerRef.current.style.transition = `transform ${SPIN_DURATION}ms cubic-bezier(0.15, 0, 0.10, 1)`
-                reelContainerRef.current.style.transform = `translateX(${finalTranslate}px)`
-            }
-        }, 50)
+                    // Ease out cubic for realistic braking
+                    reelContainerRef.current.style.transition = `transform ${SPIN_DURATION}ms cubic-bezier(0.15, 0, 0.10, 1)`
+                    reelContainerRef.current.style.transform = `translateX(${finalTranslate}px)`
 
-        // 4. End Spin
-        setTimeout(() => {
+                    // Sound Effect Logic
+                    const audio = new Audio('/select.mp3')
+                    audio.volume = 0.5
+
+                    let lastIndex = -1
+                    const startTime = Date.now()
+
+                    const checkPosition = () => {
+                        if (!reelContainerRef.current) return
+
+                        const now = Date.now()
+                        if (now - startTime > SPIN_DURATION) return
+
+                        const style = window.getComputedStyle(reelContainerRef.current)
+                        const matrix = new DOMMatrix(style.transform)
+                        const currentX = matrix.m41
+
+                        const windowWidth = windowRef.current?.clientWidth || 0
+                        const centerOffset = windowWidth / 2
+
+                        const rawIndex = (centerOffset - currentX - (CARD_WIDTH / 2)) / TOTAL_ITEM_WIDTH
+                        const currentIndex = Math.round(rawIndex)
+
+                        if (currentIndex !== lastIndex) {
+                            if (!isMuted) {
+                                const soundClone = audio.cloneNode() as HTMLAudioElement
+                                soundClone.volume = 0.2
+                                soundClone.play().catch(() => { })
+                            }
+                            lastIndex = currentIndex
+                        }
+
+                        requestAnimationFrame(checkPosition)
+                    }
+
+                    requestAnimationFrame(checkPosition)
+                }
+            }, 50)
+
+            // 4. End Spin
+            setTimeout(() => {
+                setIsSpinning(false)
+                setShowWinnerModal(true)
+            }, SPIN_DURATION + 500)
+
+        } catch (error) {
+            console.error(error)
             setIsSpinning(false)
-            setShowWinnerModal(true)
-        }, SPIN_DURATION + 500)
+            alert("Error opening case")
+        }
     }
 
     const pickWeightedWinner = (items: Item[]) => {
@@ -172,18 +228,44 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
     }
 
     return (
-        <div className="w-full flex flex-col items-center gap-10">
+        <div className="w-full flex flex-col items-center gap-8">
+            {/* HEADER */}
+            <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-0">
+                {/* Back Button */}
+                <Link href="/" className="h-10 px-4 rounded-lg flex items-center justify-center gap-2 bg-[#202330] border border-[#2c303f] text-[#b1b6c6] hover:text-white transition-colors text-sm font-medium uppercase tracking-wider">
+                    <ArrowLeft className="w-4 h-4" />
+                    Atrás
+                </Link>
+
+                {/* Case Info */}
+                <div className="flex flex-col items-center">
+                    <h1 className="text-2xl font-bold text-white uppercase tracking-wider">{caseName}</h1>
+                    <div className="flex items-center gap-2 mt-1">
+                        <img src="https://flagcdn.com/w20/ar.png" alt="ARS" className="w-4 h-auto rounded-[2px]" />
+                        <span className="text-sm font-bold text-[#b1b6c6]">{formatCurrency(casePrice)}</span>
+                    </div>
+                </div>
+
+                {/* Mute Button */}
+                <button
+                    onClick={() => setIsMuted(!isMuted)}
+                    className="w-10 h-10 rounded-lg cursor-pointer flex items-center justify-center bg-[#202330] border border-[#2c303f] text-[#b1b6c6] hover:text-white transition-colors"
+                >
+                    {isMuted ? <Volume2 className="w-5 h-5 text-red-500/50" /> : <Volume2 className="w-5 h-5" />}
+                </button>
+            </div>
+
             {/* SPINNER WINDOW */}
             <div className="relative w-full max-w-7xl mx-auto">
 
                 {/* Neon Frame */}
-                <div className="relative overflow-hidden bg-[#0A0A0A] rounded-xl border-2 border-[#1f2937] shadow-2xl h-[260px]">
+                <div className="relative overflow-hidden bg-[#0A0A0A] border border-[#1f2937] shadow-2xl h-[260px]">
 
                     {/* Top/Bottom Markers */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 filter drop-shadow-[0_0_8px_rgba(34,197,94,1)]">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 filter">
                         <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[16px] border-t-primary" />
                     </div>
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 filter drop-shadow-[0_0_8px_rgba(34,197,94,1)]">
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 filter">
                         <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[16px] border-b-primary" />
                     </div>
 
@@ -247,19 +329,19 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
                     onClick={startSpin}
                     disabled={isSpinning}
                     className={cn(
-                        "group relative px-16 py-4 rounded-lg overflow-hidden transition-all duration-300 cursor-pointer",
+                        "group relative rounded-lg px-16 py-4 overflow-hidden transition-all duration-300 cursor-pointer",
                         isSpinning ? "opacity-50 cursor-not-allowed grayscale" : "active:scale-95"
                     )}
                 >
                     {/* Button Background & Effects */}
-                    <div className="absolute inset-0 bg-[#0d1117] border border-primary/30 rounded-lg" />
-                    <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-all" />
+                    <div className="absolute rounded-lg inset-0 bg-gradient-to-b from-[#ffc44f] to-[#ffa900] border border-[#ffc44f]/50" />
+                    <div className="absolute rounded-lg inset-0 bg-secondary/10 group-hover:bg-secondary/20 transition-all" />
 
                     {/* Neon Lines */}
                     <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
 
-                    <span className="relative z-10 text-primary font-bold text-lg tracking-[0.25em] uppercase drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]">
+                    <span className="relative z-10 text-black font-bold text-base tracking-[0.25em] uppercase">
                         {isSpinning ? "Abriendo..." : "Abrir Caja"}
                     </span>
                 </button>
@@ -268,54 +350,69 @@ export default function CaseOpener({ items, casePrice, caseName }: CaseOpenerPro
             {/* WINNER MODAL */}
             {showWinnerModal && winner && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-black/90 backdrop-blur-md animate-in fade-in duration-300" onClick={() => setShowWinnerModal(false)} />
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowWinnerModal(false)} />
 
-                    <div className="relative w-full max-w-lg animate-in zoom-in-95 duration-500">
-                        {/* Header */}
-                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+                    <div className="relative w-full max-w-md animate-in zoom-in-95 duration-500">
+                        <div className="relative bg-[#1a1d26]/70 border border-white/5 rounded-2xl overflow-hidden shadow-2xl p-8 flex flex-col items-center gap-6">
 
-                        <div className="relative bg-[#0F0F0F] border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-8 flex flex-col items-center">
-                            <div className="absolute top-4 right-4">
-                                <button onClick={() => setShowWinnerModal(false)} className="text-gray-500 hover:text-white/80 cursor-pointer rounded-lg hover:bg-white/5 p-1.5 transition-colors">
-                                    <X size={24} />
-                                </button>
+                            {/* Close Button with Ghost Effect */}
+                            <button
+                                onClick={() => setShowWinnerModal(false)}
+                                className="absolute top-4 right-4 text-gray-500 rounded-lg hover:text-white hover:bg-secondary/25 transition-colors p-2 cursor-pointer"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            {/* Rarity Glow Background */}
+                            <div className={cn("absolute inset-0 opacity-20 bg-gradient-to-b from-transparent to-transparent pointer-events-none",
+                                winner.rarity === 'legendary' ? 'via-yellow-500/20' :
+                                    winner.rarity === 'epic' ? 'via-purple-500/20' :
+                                        winner.rarity === 'rare' ? 'via-blue-500/20' : 'via-gray-500/20'
+                            )} />
+
+                            <div className="text-center space-y-1 z-10 pt-4">
+                                <h2 className="text-3xl font-bold uppercase tracking-wider text-white drop-shadow-md">
+                                    ¡FELICIDADES!
+                                </h2>
+                                <p className="text-gray-400 text-sm font-medium">Has ganado un nuevo objeto</p>
                             </div>
 
-                            <h2 className="text-2xl font-bold text-white uppercase tracking-widest mb-6 drop-shadow-md">
-                                ¡PREMIO GANADO!
-                            </h2>
-
-                            <div className="relative">
-                                {/* Glow */}
-                                <div className={cn("absolute inset-0 rounded-full blur-3xl opacity-30",
+                            <div className="relative group z-10 my-4">
+                                <div className={cn("absolute inset-0 rounded-full blur-2xl opacity-40 transition-all duration-500 group-hover:opacity-60",
                                     winner.rarity === 'legendary' ? 'bg-yellow-500' :
-                                        winner.rarity === 'epic' ? 'bg-purple-500' : 'bg-blue-500'
+                                        winner.rarity === 'epic' ? 'bg-purple-500' :
+                                            winner.rarity === 'rare' ? 'bg-blue-500' : 'bg-gray-500'
                                 )} />
-
                                 <img
                                     src={winner.image_url}
                                     alt={winner.name}
-                                    className="relative w-36 h-36 object-cover z-10 drop-shadow-2xl"
+                                    className="relative w-48 h-48 object-contain drop-shadow-2xl transform transition-transform duration-500 group-hover:scale-110"
                                 />
                             </div>
 
-                            <div className="text-center mt-6 space-y-2">
-                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">
+                            <div className="text-center space-y-2 z-10">
+                                <div className={cn("inline-block px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest mb-1",
+                                    winner.rarity === 'legendary' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+                                        winner.rarity === 'epic' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
+                                            winner.rarity === 'rare' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                                                'bg-gray-500/20 text-gray-400 border border-gray-500/30'
+                                )}>
+                                    {winner.rarity}
+                                </div>
+                                <h3 className="text-xl font-bold text-white max-w-[280px] break-words leading-tight mt-2 mx-auto">
                                     {winner.name}
-                                </p>
-                                <p className="text-3xl font-mono text-primary font-bold">
+                                </h3>
+                                <p className="text-2xl font-mono text-primary font-bold">
                                     {formatCurrency(winner.price)}
                                 </p>
                             </div>
 
-                            <div className="w-full mt-8">
-                                <button
-                                    onClick={() => setShowWinnerModal(false)}
-                                    className="w-full cursor-pointer bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-lg transition-colors uppercase tracking-wider text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)]"
-                                >
-                                    Recoger Premio
-                                </button>
-                            </div>
+                            <button
+                                onClick={() => setShowWinnerModal(false)}
+                                className="w-full btn-primary cursor-pointer py-3 rounded-xl text-black font-bold uppercase tracking-wider text-sm shadow-lg z-10 mt-2 hover:brightness-110 active:scale-[0.98] transition-all"
+                            >
+                                Vender por {formatCurrency(winner.price)}
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -7,23 +7,19 @@ import {
     Menu,
     Headphones,
     Gift,
-    Moon,
-    Sun,
     Handshake,
     X,
-    Box,
     Home,
     Trophy,
     LifeBuoy
 } from 'lucide-react'
 import { useState } from 'react'
-import { useTheme } from '@/components/theme-provider'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import { User } from '@supabase/supabase-js'
 
 export default function Sidebar({ user }: { user: User | null }) {
     const pathname = usePathname()
-    const { theme, setTheme } = useTheme()
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleSidebar = () => setIsOpen(!isOpen)
@@ -78,7 +74,7 @@ export default function Sidebar({ user }: { user: User | null }) {
                                     <span className="font-mono font-bold text-sm">0,00 ARS</span>
                                 </div>
                             </div>
-                            <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm py-2 rounded-md transition-colors">
+                            <button className="w-full btn-primary text-sm py-2 rounded-md transition-colors font-bold">
                                 Depositar
                             </button>
                         </div>
@@ -102,66 +98,14 @@ export default function Sidebar({ user }: { user: User | null }) {
                     <SidebarLink href="/daily-case" icon={<Gift className="w-5 h-5" />}>
                         Caja diaria
                     </SidebarLink>
-
-                    {/* Support Link */}
                     <SidebarLink href="/support" icon={<LifeBuoy className="w-5 h-5" />}>
-                        Soporte
+                        Centro de ayuda
                     </SidebarLink>
-
-                    {/* Admin Link */}
-                    {user?.user_metadata?.role === 'admin' && (
-                        <SidebarLink href="/admin/create-case" icon={<Box className="w-5 h-5" />}>
-                            Crear Caja (Admin)
-                        </SidebarLink>
-                    )}
                 </div>
 
                 {/* Footer Actions */}
                 <div className="p-4 mt-auto space-y-4">
-                    {/* Stats Section */}
-                    <div className="space-y-2">
-                        <StatsCard
-                            label="Online"
-                            value="562"
-                            color="text-white"
-                            image="/onlines.png"
-                        />
-                        <StatsCard
-                            label="Usuarios"
-                            value="112.902"
-                            color="text-white"
-                            image="/users.png"
-                        />
-                        <StatsCard
-                            label="Cajas Abiertas"
-                            value="892.211"
-                            color="text-white"
-                            image="/cajas.png"
-                        />
-                    </div>
-
-                    <div className="flex items-center justify-between bg-muted/50 rounded-full p-1">
-                        <button
-                            onClick={() => setTheme('dark')}
-                            className={cn(
-                                "flex-1 flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all",
-                                theme === 'dark' ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                            )}
-                        >
-                            <Moon className="w-3 h-3" />
-                            <span>Oscuro</span>
-                        </button>
-                        <button
-                            onClick={() => setTheme('light')}
-                            className={cn(
-                                "flex-1 flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all",
-                                theme === 'light' ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                            )}
-                        >
-                            <Sun className="w-3 h-3" />
-                            <span>Claro</span>
-                        </button>
-                    </div>
+                    {/* Stats Section Removed */}
                 </div>
             </aside>
         </>
@@ -190,16 +134,3 @@ function SidebarLink({ href, icon, children }: { href: string, icon: React.React
     )
 }
 
-function StatsCard({ label, value, color, image }: { label: string, value: string, color: string, image: string }) {
-    return (
-        <div className="bg-muted/20 border border-white/5 rounded-lg p-3 flex items-center space-x-2">
-            <div className="bg-background/50 p-2 rounded-md shrink-0">
-                <img src={image} alt={label} className="w-6 h-6 object-contain" />
-            </div>
-            <div>
-                <p className="text-xs text-muted-foreground tracking-wider mb-0.5">{label}</p>
-                <p className={cn("text-lg  font-bold leading-none", color)}>{value}</p>
-            </div>
-        </div>
-    )
-}

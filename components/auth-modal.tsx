@@ -91,7 +91,7 @@ export default function AuthModal() {
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="relative w-full max-w-md bg-[#1a1a1a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                    className="relative w-full max-w-md bg-card border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
                 >
                     {/* Close Button */}
                     <button
@@ -117,7 +117,7 @@ export default function AuthModal() {
                         <button
                             onClick={handleGoogleLogin}
                             disabled={isLoading}
-                            className="w-full bg-white text-black font-bold py-3 rounded-lg transition-all transform active:scale-95 hover:bg-gray-100 flex items-center justify-center space-x-2 mb-6 cursor-pointer"
+                            className="w-full btn-secondary font-bold py-3 rounded-lg transition-all transform active:scale-95 flex items-center justify-center space-x-2 mb-6 cursor-pointer"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -160,7 +160,7 @@ export default function AuthModal() {
                                             type="text"
                                             required
                                             placeholder="Tu nombre"
-                                            className="w-full bg-black/20 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-primary transition-colors"
+                                            className="input-primary pl-10"
                                         />
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@ export default function AuthModal() {
                                         type="email"
                                         required
                                         placeholder="tu@email.com"
-                                        className="w-full bg-black/20 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-primary transition-colors"
+                                        className="input-primary pl-10"
                                     />
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ export default function AuthModal() {
                                         type="password"
                                         required
                                         placeholder="••••••••"
-                                        className="w-full bg-black/20 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-primary transition-colors"
+                                        className="input-primary pl-10"
                                     />
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ export default function AuthModal() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-3 rounded-lg transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer"
+                                className="w-full btn-primary py-3 rounded-lg transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer"
                             >
                                 {isLoading ? (
                                     <Loader2 className="w-5 h-5 animate-spin" />

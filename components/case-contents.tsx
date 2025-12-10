@@ -41,12 +41,12 @@ export default function CaseContents({ items }: CaseContentsProps) {
                 </h3>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1">
                 {items.sort((a, b) => (b.price - a.price)).map((item) => (
                     <div
                         key={item.id}
                         className={cn(
-                            "group relative flex flex-col justify-between bg-[#15171e] rounded-lg overflow-hidden transition-all duration-300 hover:bg-[#1c1f26] border border-transparent hover:border-white/5 border-b-2",
+                            "group relative rounded-t-lg flex flex-col justify-between bg-[#15171e] overflow-hidden border border-transparent border-b",
                             getRarityColor(item.rarity)
                         )}
                     >
@@ -69,7 +69,7 @@ export default function CaseContents({ items }: CaseContentsProps) {
                             <img
                                 src={item.image_url}
                                 alt={item.name}
-                                className="w-3/4 h-3/4 object-contain drop-shadow-xl z-10 group-hover:scale-105 transition-transform duration-300"
+                                className="w-3/4 h-3/4 object-contain drop-shadow-xl z-10"
                             />
                         </div>
 

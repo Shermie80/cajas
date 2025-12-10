@@ -91,7 +91,7 @@ export default function CreateCaseForm() {
     }
 
     return (
-        <div className="w-full max-w-4xl mx-auto p-6 bg-[#1e2121] rounded-xl border border-[#2e3030]">
+        <div className="w-full max-w-4xl mx-auto p-6 bg-card rounded-xl border border-border">
             <h2 className="text-2xl font-bold mb-6 text-white">Crear Nueva Caja</h2>
 
             {state.error && (
@@ -117,7 +117,7 @@ export default function CreateCaseForm() {
                             <label className="text-sm font-medium text-muted-foreground">Nombre</label>
                             <input
                                 {...register('name')}
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none transition-colors"
+                                className="input-primary"
                                 placeholder="Ej: Dragon Lore Case"
                             />
                             {errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}
@@ -136,7 +136,7 @@ export default function CreateCaseForm() {
                             <label className="text-sm font-medium text-muted-foreground">Descripción</label>
                             <textarea
                                 {...register('description')}
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-primary focus:outline-none transition-colors min-h-[80px]"
+                                className="input-primary min-h-[80px]"
                                 placeholder="Descripción de la caja..."
                             />
                         </div>
@@ -173,7 +173,7 @@ export default function CreateCaseForm() {
                                     <label className="text-xs text-muted-foreground">Nombre</label>
                                     <input
                                         {...register(`items.${index}.name`)}
-                                        className="w-full bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm text-white"
+                                        className="input-primary py-1.5 text-sm"
                                         placeholder="Item Name"
                                     />
                                     {errors.items?.[index]?.name && <p className="text-[10px] text-red-500">{errors.items[index].name.message}</p>}
@@ -236,7 +236,7 @@ export default function CreateCaseForm() {
                     <button
                         type="submit"
                         disabled={isPending || !isProbabilityValid}
-                        className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full btn-primary py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {isPending ? (
                             <>

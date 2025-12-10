@@ -159,11 +159,21 @@ export default function Header({ user }: { user: User | null }) {
                                             <HistoryIcon className="w-4 h-4" />
                                             <span>Historial</span>
                                         </Link>
+                                        {user.user_metadata?.role === 'admin' && (
+                                            <Link
+                                                href="/admin/create-case"
+                                                className="flex items-center space-x-3 px-3 py-2 text-sm text-muted-foreground hover:bg-muted/50 hover:text-foreground rounded-lg transition-colors"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                            >
+                                                <Box className="w-4 h-4" />
+                                                <span>Crear Caja</span>
+                                            </Link>
+                                        )}
                                     </div>
 
                                     <div className="p-2 border-t border-border">
                                         <form action={signout}>
-                                            <button type="submit" className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
+                                            <button type="submit" className="w-full cursor-pointer flex items-center space-x-3 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                                                 <LogOut className="w-4 h-4" />
                                                 <span>Cerrar Sesión</span>
                                             </button>
@@ -172,7 +182,7 @@ export default function Header({ user }: { user: User | null }) {
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                    </div>
+                    </div >
                 ) : (
                     <div className="flex items-center space-x-3">
                         <button
@@ -188,9 +198,10 @@ export default function Header({ user }: { user: User | null }) {
                             Registrarse
                         </button>
                     </div>
-                )}
-            </div>
-        </header>
+                )
+                }
+            </div >
+        </header >
     )
 }
 

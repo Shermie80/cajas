@@ -23,51 +23,58 @@
 }
 
 :root {
-  /* Dark Mode (Default) */
-  --background: 189 5% 16%;
-  /* #323738 */
-  --foreground: 0 0% 98%;
-  --card: 189 5% 25%;
-  --card-foreground: 0 0% 98%;
-  --popover: 189 5% 21%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 150 70% 50%;
-  /* Bright Green */
-  --primary-foreground: 0 0% 0%;
-  --secondary: 189 5% 30%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 189 5% 18%;
-  --muted-foreground: 189 5% 70%;
-  --accent: 189 5% 30%;
-  --accent-foreground: 0 0% 98%;
+  /* Site Config - Dark Mode Only */
+  --background: 228 23% 13%;
+  /* #191c28 (Now Main Background - Was Sidebar) */
+  --foreground: 0 0% 100%;
+  /* #fff */
+
+  --card: 229 20% 16%;
+  /* #202330 (Now Sidebar/Card - Was Main Background) */
+  --card-foreground: 0 0% 100%;
+
+  --popover: 229 20% 16%;
+  /* #202330 */
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 40 98% 56%;
+  /* #fdb022 */
+  --primary-foreground: 229 20% 16%;
+  /* Adjusted for contrast */
+
+  --secondary: 227 18% 21%;
+  /* #2c303f (Botones fondo) */
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 231 26% 11%;
+  /* #141622 (Fondo tercero/Footer) */
+  --muted-foreground: 226 14% 74%;
+  /* #b1b6c6 (Texto secundario) */
+
+  --accent: 227 18% 21%;
+  /* #2c303f */
+  --accent-foreground: 0 0% 100%;
+
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 189 5% 30%;
-  --input: 189 5% 30%;
-  --ring: 150 70% 50%;
-  --radius: 0.5rem;
-}
 
-.light {
-  --background: 0 0% 95%;
-  --foreground: 189 5% 10%;
-  --card: 0 0% 100%;
-  --card-foreground: 189 5% 10%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 189 5% 10%;
-  --primary: 150 70% 40%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 90%;
-  --secondary-foreground: 189 5% 10%;
-  --muted: 0 0% 90%;
-  --muted-foreground: 189 5% 40%;
-  --accent: 0 0% 90%;
-  --accent-foreground: 189 5% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 85%;
-  --input: 0 0% 85%;
-  --ring: 150 70% 40%;
+  --border: 227 18% 21%;
+  /* #2c303f */
+  --input: 227 18% 21%;
+  /* #2c303f (Bordes input) */
+  --ring: 40 98% 56%;
+
+  --radius: 0.5rem;
+
+  /* Custom variables for specific needs */
+  --input-background: 231 26% 11%;
+  /* #141622 */
+  --button-border: 227 13% 29%;
+  /* #404453 */
+  --checkbox-unchecked: 227 13% 29%;
+  /* #404453 */
+  --checkbox-checked: 142 58% 38%;
+  /* #299b53 */
 }
 
 body {
@@ -76,10 +83,33 @@ body {
   min-height: 100vh;
 }
 
-.glass {
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#fdb022] to-[#fec84b] border border-[#fdb022] text-[#202330] font-bold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed;
+    box-shadow: 0 0 20px rgba(253, 176, 34, 0.3);
+  }
+
+  .btn-secondary {
+    @apply bg-[var(--secondary)] border border-[var(--button-border)] text-white hover:bg-[var(--secondary)]/80 transition-all shadow-none;
+  }
+
+  /* Social buttons / Icon buttons often use a specific style */
+  .btn-icon {
+    @apply bg-[var(--secondary)] border border-[var(--button-border)] text-white hover:text-[#fdb022] transition-colors p-2 rounded-lg;
+  }
+
+  .input-primary {
+    @apply w-full bg-[var(--input-background)] border border-[var(--input)] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[var(--primary)] transition-colors placeholder:text-[var(--muted-foreground)];
+  }
+
+  .checkbox-custom {
+    @apply h-5 w-5 rounded border border-[var(--checkbox-unchecked)] bg-[var(--secondary)] text-[var(--checkbox-checked)] focus:ring-[var(--primary)];
+  }
+}
+
+/* Helper to utilize the gradient text if needed */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#fdb022] to-[#fec84b];
 }
 
 .neon-text {

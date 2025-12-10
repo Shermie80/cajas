@@ -18,7 +18,7 @@ export default function Navbar({ user }: { user: User | null }) {
     const balance = 0.00
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
@@ -47,7 +47,7 @@ export default function Navbar({ user }: { user: User | null }) {
                                     >
                                         <Bell className="w-5 h-5" />
                                         {hasUnread && (
-                                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-[#1a1a2e]"></span>
+                                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-background"></span>
                                         )}
                                     </button>
 
@@ -57,7 +57,7 @@ export default function Navbar({ user }: { user: User | null }) {
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 10 }}
-                                                className="absolute right-0 mt-2 w-80 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50"
+                                                className="absolute right-0 mt-2 w-80 bg-popover border border-border rounded-xl shadow-xl overflow-hidden z-50"
                                             >
                                                 <div className="px-4 py-3 border-b border-white/5 flex justify-between items-center">
                                                     <span className="text-sm font-medium text-white">Notificaciones</span>
@@ -115,7 +115,7 @@ export default function Navbar({ user }: { user: User | null }) {
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 10 }}
-                                                className="absolute right-0 mt-2 w-48 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-xl overflow-hidden"
+                                                className="absolute right-0 mt-2 w-48 bg-popover border border-border rounded-xl shadow-xl overflow-hidden"
                                             >
                                                 <div className="px-4 py-3 border-b border-white/5">
                                                     <p className="text-sm text-white font-medium truncate">{user.user_metadata.full_name}</p>
@@ -144,7 +144,7 @@ export default function Navbar({ user }: { user: User | null }) {
                         ) : (
                             <Link
                                 href="/login"
-                                className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]"
+                                className="btn-primary px-5 py-2 rounded-lg font-bold flex items-center"
                             >
                                 Login
                             </Link>

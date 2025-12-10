@@ -61,7 +61,7 @@ export default function LoginPage() {
                                 name="email"
                                 type="email"
                                 required
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                                className="input-primary"
                                 placeholder="you@example.com"
                             />
                         </div>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                                 type="password"
                                 required
                                 minLength={6}
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                                className="input-primary"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -87,7 +87,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+                            className="w-full btn-primary py-3 rounded-lg flex items-center justify-center transform hover:scale-[1.02] active:scale-[0.98]"
                         >
                             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
                         </button>

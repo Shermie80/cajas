@@ -88,21 +88,14 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         <main className="min-h-screen pt-24 pb-20">
             <div className="container mx-auto px-4">
 
-                {/* Header Info */}
-                <div className="text-center mb-8 space-y-2">
-                    <h1 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-widest drop-shadow-lg">
-                        {caseData.name}
-                    </h1>
-                    <p className="text-primary font-mono text-xl md:text-2xl font-bold bg-primary/10 inline-block px-6 py-2 rounded-full border border-primary/20 backdrop-blur-sm">
-                        {formatCurrency(caseData.price)}
-                    </p>
-                </div>
+                {/* Header Info Removed - Moved to CaseOpener */}
 
                 {/* Opener Component */}
                 <CaseOpener
                     items={items}
                     casePrice={caseData.price}
                     caseName={caseData.name}
+                    caseId={caseData.id}
                 />
 
                 {/* Contents Grid */}
