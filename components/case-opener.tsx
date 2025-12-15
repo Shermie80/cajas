@@ -316,7 +316,7 @@ export default function CaseOpener({ items, casePrice, caseName, caseId }: CaseO
 
                                     <div className="w-full text-center mt-2 space-y-1">
                                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest truncate">
-                                            PREMIO EFECTIVO
+                                            {item.name}
                                         </p>
                                         <p className="text-white font-bold text-lg tracking-wide">
                                             {formatCurrency(item.price)}
@@ -395,7 +395,7 @@ export default function CaseOpener({ items, casePrice, caseName, caseId }: CaseO
                                 <img
                                     src={winner.image_url}
                                     alt={winner.name}
-                                    className="relative w-48 h-48 object-contain drop-shadow-2xl transform transition-transform duration-500 group-hover:scale-110"
+                                    className="relative w-40 h-40 object-cover drop-shadow-2xl"
                                 />
                             </div>
 

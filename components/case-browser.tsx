@@ -64,7 +64,7 @@ export default function CaseBrowser({ initialCases }: CaseBrowserProps) {
     return (
         <div>
             {/* Filter Bar */}
-            <div className="relative z-40 bg-[#1a1d26] border border-white/5 p-4 rounded-xl mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between">
+            <div className="relative z-40 mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between">
 
                 {/* Find by Name */}
                 <div className="relative w-full lg:w-96">

@@ -21,7 +21,7 @@ export default function Footer() {
                         <h3 className="font-bold mb-4">Plataforma</h3>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contacto</Link></li>
-                            <li><Link href="/provably-fair" className="hover:text-primary transition-colors">Provably Fair</Link></li>
+                            <li><Link href="/provably-fair" className="hover:text-primary transition-colors">Juego Limpio</Link></li>
                             <li><Link href="/top-drops" className="hover:text-primary transition-colors">Mejores Drops</Link></li>
                         </ul>
                     </div>

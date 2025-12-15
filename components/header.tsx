@@ -41,7 +41,7 @@ export default function Header({ user }: { user: User | null }) {
                         <img src="https://flagcdn.com/w20/ar.png" alt="ARS" className="w-5 h-auto rounded-sm" />
                         <span className="font-mono font-bold text-sm">0,00 ARS</span>
                     </div>
-                    <Link href="/wallet" className="bg-gradient-to-r from-primary to-[#9ce871] hover:bg-primary/90 text-primary-foreground font-bold text-sm px-4 py-1.5 rounded-md transition-colors flex items-center">
+                    <Link href="/wallet" className="bg-gradient-to-r from-primary to-[#ffc657] hover:bg-primary/90 text-primary-foreground font-bold text-sm px-4 py-1.5 rounded-md transition-colors flex items-center">
                         Depositar
                     </Link>
                 </div>
